@@ -1,7 +1,7 @@
 from config import settings
 from sqlalchemy import Column, String, Integer, Sequence, insert, select
 from sqlalchemy import create_engine, text
-from models.good import Base, User, Classes
+from models.good import Base, User
 
 
 ur_s = settings.POSTGRES_DATABASE_URLS
