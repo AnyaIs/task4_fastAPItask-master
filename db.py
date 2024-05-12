@@ -1,24 +1,11 @@
-import uvicorn
-from fastapi import FastAPI, Response, Path, Query, Body, Header
-from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse, FileResponse
-import db
-from public.router_users import users_router,classes_router
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+from config import DB_PORT, DB_HOST, DB_NAME,DB_PASS,DB_USER
+from models import Base
 
-app = FastAPI()
+DATABASE_URL=f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+engine=create_engine(DATABASE_URL, echo=True)
+Session=sessionmaker()
 
-
-db.create_tables()
-db.populate_classes_table()
-db.f_bilder()
-
-app.include_router(users_router)
-app.include_router(classes_router)
-
-
-@app.get("/")
-def main():
-    return FileResponse("files/index.html")
-
-
-if __name__ == "__main__":
-   uvicorn.run(app,host="127.0.0.1", port=8000)
+async def init_db():
+    Base.metadata.create_all(bind=engine)
