@@ -1,12 +1,17 @@
 FROM python:3.11
-RUN mkdir /fastapi_app
-WORKDIR /fastapi_app
+
+# Создаем директорию в контейнере для приложения
+WORKDIR /app
+
+# Копируем файл зависимостей и устанавливаем их
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-COPY . /app
 
-WORKDIR /fastapi_app
+# Копируем все файлы из текущей директории в директорию /app в контейнере
+COPY . .
 
-CMD gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000
+# Указываем команду для запуска приложения
+CMD ["gunicorn", "main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000"]
+
 
