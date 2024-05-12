@@ -2,6 +2,7 @@ from typing import Union, List
 from pydantic import BaseModel, Field, HttpUrl
 from sqlalchemy import Column, String, Integer, Identity, Sequence, Float, Boolean, ForeignKey, MetaData
 from sqlalchemy.orm import declarative_base
+from enum import Enum
 
 Base = declarative_base()
 
