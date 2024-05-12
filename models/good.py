@@ -17,7 +17,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, Identity(start=10), primary_key=True)
-    name = Column(String, index=True, nullabe=False)
+    name = Column(String, index=True, nullable=False)
     hashed_password = Column(String)
 
     class Tags(Enum):
